@@ -40,7 +40,6 @@ public class _02_FindTheHiddenButton implements ActionListener{
 			jButtons[i].addActionListener(this);
 			//8. add each JButton to the panel
 			panel.add(jButtons[i]);
-			jButtons[i].setText(String.valueOf(i));
 		}
 		
 		//9 add the panel to the window
@@ -53,7 +52,6 @@ public class _02_FindTheHiddenButton implements ActionListener{
 		JOptionPane.showMessageDialog(null, "Find the button that says 'ME'");
 		//13. initialize the hiddenButton variable to a random number less than the int created in step 3
 		hiddenButton = new Random().nextInt(userInput);
-		System.out.println(hiddenButton);
 		//14. Set the text of the JButton located at hiddenButton to read "ME"
 		jButtons[hiddenButton].setText("ME");
 		//15. Use Thread.sleep(100); to pause the program.
