@@ -16,12 +16,12 @@ import javax.swing.Timer;
 public class FireworkDisplay extends JPanel implements ActionListener {
 	public static int WIDTH = 720;
 	public static int HEIGHT = 480;
-	
+	int f = 0;
 	private JFrame window;
 	private JPanel buttonPanel;
 	private JButton squirtButton;
 	private Timer timer;
-	
+	Firework[] fireworks = new Firework[10];
 	Firework firework = new Firework();
 	
 	public static void main(String[] args) {
@@ -32,7 +32,9 @@ public class FireworkDisplay extends JPanel implements ActionListener {
 		window = new JFrame();
 		window.setLayout(new BorderLayout());
 		window.add(this, BorderLayout.CENTER);
-		
+		for (int i = 0; i < fireworks.length; i++) {
+			fireworks[i] = firework;
+		}
 		WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
 		HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -54,31 +56,31 @@ public class FireworkDisplay extends JPanel implements ActionListener {
 	}
 	
 	private void fire() {
-		squirtButton.setEnabled(false);
-		firework = new Firework();
-		firework.launch();
-		timer.start();		
+		fireworks[f] = new Firework();
+		fireworks[f].launch();
+		timer.start();
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
 		g.setColor(new Color(10, 30, 70));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		firework.drawSparks(g);
+		for (int i = 0; i < (f%10); i++) {
+			fireworks[i].drawSparks(g);
+		}
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		firework.updateSparks();
+		for (int i = 0; i < (f%10); i++) {
+			fireworks[i].updateSparks();
+		}
 		repaint();
-		
-		boolean reset = true;
-		if(!firework.dead) {
-			reset = false;
-		}
-		if(reset) {
-			timer.stop();
-			squirtButton.setEnabled(true);
-		}
+		if(!fireworks[f].dead) {
+			f++;
+			if (f > fireworks.length-1) {
+				f = 0;
+			}
+		} 
 	}
 }
